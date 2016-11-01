@@ -11,10 +11,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jorgereina.gigs.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    android:gravity="center_vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_feed_rv"/>
+        android:hint="@string/username"
+        android:id="@+id/username_et"
+        android:gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_et"
+        android:id="@+id/password_et"
+        android:password="true"
+        android:hint="@string/password"
+        android:gravity="center_horizontal"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_et"
+        android:id="@+id/register_btn"
+        android:text="@string/register"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register_btn"
+        android:text="Already a member?"
+        android:gravity="center_horizontal"
+        android:id="@+id/member_tv"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/member_tv"
+        android:text="Sign in"/>
 </RelativeLayout>
