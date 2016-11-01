@@ -13,8 +13,8 @@
     tools:context="com.jorgereina.gigs.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/main_feed_rv"/>
 </RelativeLayout>
