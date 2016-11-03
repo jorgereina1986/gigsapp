@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +35,14 @@ public class MainActivity extends AppCompatActivity
 
         String username = usernameEt.getText().toString();
         String password = passwordEt.getText().toString();
+
+
+        FirebaseDatabase fdb = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = fdb.getReference("hello");
+
+        databaseReference.setValue("testing firebase");
+
+        databaseReference.child("Test child");
 
 
 
