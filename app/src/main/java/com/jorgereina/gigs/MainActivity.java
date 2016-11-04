@@ -1,5 +1,6 @@
 package com.jorgereina.gigs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,10 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
+import static com.jorgereina.gigs.R.menu.main;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     private EditText passwordEt;
     private Button registerBtn;
     private Button signInBtn;
+    Context context;
+    ArrayList<String> list  = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +45,7 @@ public class MainActivity extends AppCompatActivity
 
 
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = fdb.getReference("hello");
-
-        databaseReference.setValue("testing firebase");
-
-        databaseReference.child("Test child");
+        final DatabaseReference rootRef= fdb.getReference("root1");
 
 
 
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(main, menu);
         return true;
     }
 
@@ -132,4 +135,5 @@ public class MainActivity extends AppCompatActivity
         registerBtn = (Button) findViewById(R.id.register_btn);
         signInBtn = (Button) findViewById(R.id.sign_in_btn);
     }
+
 }
