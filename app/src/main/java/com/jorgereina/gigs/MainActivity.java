@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference rootRef= fdb.getReference("root1");
 
-
-
     }
 
 
