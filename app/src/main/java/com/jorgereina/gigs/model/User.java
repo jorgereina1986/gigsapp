@@ -7,13 +7,15 @@ public class User {
     private String password;
     private String occupation;
     private String profilePic;
+    private String userId;
 
     public User() {
     }
 
-    public User(String userName, String profilePic) {
+    public User(String userName, String profilePic, String userId) {
         this.userName = userName;
         this.profilePic = profilePic;
+        this.userId = userId;
     }
 
     public String getProfilePic() {
