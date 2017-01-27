@@ -1,6 +1,6 @@
 package com.jorgereina.gigs;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,25 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static com.jorgereina.gigs.R.menu.main;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private EditText usernameEt;
-    private EditText passwordEt;
-    private Button registerBtn;
-    private Button signInBtn;
-    Context context;
-    ArrayList<String> list  = new ArrayList<String>();
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +29,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         initViews();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        FirebaseDatabase fdb = FirebaseDatabase.getInstance();
-        final DatabaseReference rootRef= fdb.getReference("root1");
+        if (firebaseUser == null) {
+            //If user not logged in, launch the login activity
+            loadLogInView();
+        }
 
     }
 
@@ -115,4 +112,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void loadLogInView() {
+        Intent intent = new Intent(this, LogInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 }
