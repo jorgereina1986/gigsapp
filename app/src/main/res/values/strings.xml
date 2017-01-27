@@ -8,4 +8,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
+    <string name="login_text_label">login</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="sign_up_button_label">Sign Up</string>
 </resources>
