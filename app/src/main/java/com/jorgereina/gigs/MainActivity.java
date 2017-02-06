@@ -10,9 +10,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.jorgereina.gigs.R.menu.main;
 
@@ -21,6 +31,8 @@ public class MainActivity extends AppCompatActivity
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private DatabaseReference database;
+    private String userId;
 
 
     @Override
@@ -29,12 +41,61 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         initViews();
 
+        //init firebase auth and database reference
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance().getReference();
 
         if (firebaseUser == null) {
             //If user not logged in, launch the login activity
             loadLogInView();
+        }
+        else {
+
+            //listview
+            userId = firebaseUser.getUid();
+            ListView listview = (ListView) findViewById(R.id.list_view);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
+            listview.setAdapter(adapter);
+
+            //add items to firebase database listview
+            final EditText text = (EditText) findViewById(R.id.todo_tv);
+            Button button = (Button) findViewById(R.id.add_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    database.child("users").child(userId).child("items").push().child("title").setValue(text.getText().toString());
+                    text.setText("");
+                }
+            });
+
+            //populate firebase list
+            database.child("users").child(userId).child("items").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    adapter.add((String) dataSnapshot.child("title").getValue());
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    adapter.remove((String) dataSnapshot.child("title").getValue());
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
 
     }
